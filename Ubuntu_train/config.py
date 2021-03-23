@@ -6,7 +6,6 @@ Created on Wed Sep 13 21:27:44 2017
 """
 import os
 import types
-import numpy
 
 
 class Config:
