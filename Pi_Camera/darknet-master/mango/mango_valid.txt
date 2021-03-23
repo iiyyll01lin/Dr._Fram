@@ -1,0 +1,11 @@
+data\obj\mango\0.jpg
+data\obj\mango\1.jpg
+data\obj\mango\2.jpg
+data\obj\mango\3.jpg
+data\obj\mango\4.jpg
+data\obj\mango\5.jpg
+data\obj\mango\6.jpg
+data\obj\mango\7.jpg
+data\obj\mango\8.jpg
+data\obj\mango\9.jpg
+data\obj\mango\10.jpg

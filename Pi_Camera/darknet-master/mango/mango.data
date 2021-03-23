@@ -1,0 +1,5 @@
+classes = 2
+train = data/mango_train.txt
+valid = data/mango_valid.txt
+names = data/mango.names
+backup = backup_mango/
