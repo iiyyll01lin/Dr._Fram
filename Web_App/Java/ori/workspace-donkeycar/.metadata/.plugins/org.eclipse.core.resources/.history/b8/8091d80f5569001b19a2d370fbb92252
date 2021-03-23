@@ -1,0 +1,87 @@
+package com.peijie.DAO;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
+import com.peijie.bean.User;
+
+
+public class userDAO {
+	private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
+	private static final String DB_URL = "jdbc:mysql://localhost:3306/donkeycar?serverTimezone=UTC";
+	private static final String USER = "root";
+	private static final String PASSWORD = "j98619861";
+	
+	private static final String INSERT_USERS_SQL = "INSERT INTO user" +
+            "  (id, username, useraccount, password, address, contact) VALUES " +
+            " (?, ?, ?, ?, ?,?);";
+	
+	protected Connection getConnection() {
+
+		Connection conn = null;
+		try {
+//			Class.forName(JDBC_DRIVER); // µù¥UJDBC Driver¦bDriver Management¤º
+//			conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+			Context context = new InitialContext();
+			DataSource ds = (DataSource) context.lookup("java:/comp/env/jdbc/servdb");
+			conn = ds.getConnection();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return conn;
+	}
+
+	public int registerEmployee(User user) throws ClassNotFoundException {
+
+        int result = 0;
+
+        Class.forName("com.mysql.jdbc.Driver");
+
+        try (Connection connection = DriverManager
+            .getConnection("jdbc:mysql://localhost:3306/donkeycar?serverTimezone=UTC", "root", "j98619861");
+
+            // Step 2:Create a statement using connection object
+            PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL)) {
+            preparedStatement.setInt(1, 1);
+            preparedStatement.setString(2, user.getUsername());
+            preparedStatement.setString(3, user.getUseraccount());
+            preparedStatement.setString(4, user.getPassword());
+            preparedStatement.setString(5, user.getAddress());
+            preparedStatement.setString(6, user.getContact());
+
+            System.out.println(preparedStatement);
+            // Step 3: Execute the query or update query
+            result = preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            // process sql exception
+            printSQLException(e);
+        }
+        return result;
+    }
+
+    private void printSQLException(SQLException ex) {
+        for (Throwable e: ex) {
+            if (e instanceof SQLException) {
+                e.printStackTrace(System.err);
+                System.err.println("SQLState: " + ((SQLException) e).getSQLState());
+                System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
+                System.err.println("Message: " + e.getMessage());
+                Throwable t = ex.getCause();
+                while (t != null) {
+                    System.out.println("Cause: " + t);
+                    t = t.getCause();
+                }
+            }
+        }
+    }
+}

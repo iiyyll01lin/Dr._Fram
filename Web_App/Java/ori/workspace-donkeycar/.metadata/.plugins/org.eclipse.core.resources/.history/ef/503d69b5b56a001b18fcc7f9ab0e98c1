@@ -1,0 +1,50 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>註冊帳號</title>
+<link href="https://fonts.googleapis.com/css?family=ZCOOL+XiaoWei"
+	rel="stylesheet">
+<link href="css/all.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+	<div class="container">
+		<div class="regbox box">
+			<h1>
+				<i class="fas fa-cat"></i>註冊帳號
+			</h1>
+			<form action="<%=request.getContextPath()%>/register" method="post">
+				<div class="st1">
+					<label for="account1">姓名</label> 
+					<input type="text" id="account1" 
+						placeholder="Username" name="name" required>
+					<span id="nm"></span><br>
+				</div>
+				<br>
+				<div class="st1">
+					<label for="accountM">使用者帳號</label>
+					<input type="text" id="accountM" placeholder="Useremail" name="account" required>
+					<span id="nmr"></span><br>
+				</div>
+				<br>
+				<div class="st1">
+					<label for="pwd1">密碼</label>
+					<input type="password" id="pwd1" placeholder="Password" name="password"
+					required>
+					<span id="pwr"></span><br>
+				</div>
+				<br>
+				<p>地址</p>
+				<input type="text" placeholder="Address" name="address" required>
+				<p>聯絡方式</p>
+				<input type="text" placeholder="Contact" name="contact" required>
+				<input type="submit" value="Register"> <a href="index.jsp">已經有帳號了嗎?</a>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

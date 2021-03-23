@@ -1,0 +1,35 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>註冊帳號</title>
+<link href="https://fonts.googleapis.com/css?family=ZCOOL+XiaoWei"
+	rel="stylesheet">
+<link href="css/all.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+	<div class="container">
+		<div class="regbox box">
+			<h1><i class="fas fa-cat"></i>註冊帳號</h1>
+			<form action="RegisterServlet" method="post">
+				<p>使用者名稱</p>
+				<input type="text" placeholder="Username" name="name" required>
+				<p>使用者帳號</p>
+				<input type="text" placeholder="Useraccount" name="account" required>
+				<p>密碼</p>
+				<input type="password" placeholder="Password" name="password"
+					required>
+				<p>地址</p>
+				<input type="text" placeholder="Address" name="address" required>
+				<p>聯絡方式</p>
+				<input type="text" placeholder="Contact" name="contact" required>
+				<input type="submit" value="Register"> <a href="index.jsp">已經有帳號了嗎?</a>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

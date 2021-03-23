@@ -1,0 +1,114 @@
+var nameValue
+var mailValue
+var passwordValue
+var dateValue
+
+// 將"送出"DISABLE 當輸入不正確時
+function buttonDisable() {
+    if (nameValue && passwordValue && dateValue) {
+        document.getElementById('sent').disabled = false;
+    } else {
+        document.getElementById('sent').disabled = true;
+    }
+}
+
+// 清除表單
+function cleanForm() {
+
+    nameValue = false;
+    passwordValue = false;
+    dateValue = false;
+
+    document.getElementById("nmr").innerHTML = "";
+    document.getElementById("pwr").innerHTML = "";
+    document.getElementById("dtr").innerHTML = "";
+
+    buttonDisable();
+}
+
+
+// 名字檢查
+function checkName() {
+
+    var thePassword = document.getElementById("account1").value;
+    var re = /^[\u4e00-\u9fa5]{2,}$/;
+
+    if (thePassword.length >= 2) {
+        if (re.test(thePassword)) {
+
+            nameValue = true;
+            document.getElementById("nm").innerHTML = "<img src=\"images/check.svg\" alt=\"\">正確";
+            // console.log("<img src=\"images/check.svg\" alt=\"\">輸入正確");
+        } else {
+            nameValue = false;
+            document.getElementById("nm").innerHTML = "<img src=\"images/no.svg\" alt=\"\">格式有誤";
+        }
+    } else {
+        nameValue = false;
+        document.getElementById("nm").innerHTML = "<img src=\"images/no.svg\" alt=\"\">姓名至少兩個字";
+    }
+    buttonDisable();
+}
+// 帳號檢查
+function checkMail() {
+
+    var thePassword = document.getElementById("accountM").value;
+	//Regular expression Testing
+	var re = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
+ 
+	//validate ok or not
+	if(re.test(thePassword)){
+    	mailValue = true;
+        document.getElementById("nmr").innerHTML = "<img src=\"img/check.svg\" alt=\"\">正確";
+	}else {
+    	mailValue = false;
+        document.getElementById("nmr").innerHTML = "<img src=\"img/no.svg\" alt=\"\">格式有誤";
+	}​
+   
+    
+}
+// 密碼檢查
+function cheackPassword() {
+
+    var thePassword = document.getElementById("pwd1").value;
+    var re = /^(?=.*[0-9])(?=.*[A-Za-z])(?=.*[!@#\$%\^&\*])(?!.*[\u4e00-\u9fa5])(?!.*[\s]).{6,}$/;
+
+    if (thePassword.length >= 6) {
+        if (re.test(thePassword)) {
+            passwordValue = true;
+            document.getElementById("pwr").innerHTML = "<img src=\"images/check.svg\" alt=\"\">正確";
+        } else {
+            passwordValue = false;
+            document.getElementById("pwr").innerHTML = "<img src=\"images/no.svg\" alt=\"\">格式有誤";
+        }
+    } else {
+        passwordValue = false;
+        document.getElementById("pwr").innerHTML = "<img src=\"images/no.svg\" alt=\"\">至少六個字";
+    }
+    buttonDisable();
+}
+
+function checkDate() {
+
+    var theDate = document.getElementById("dt").value;
+    var re = /^\d{4}[\/]{1}\d{1,2}[\/]{1}\d{1,2}$/;
+    var thisDate = new Date(theDate);
+    var thisDay = thisDate.getDate();
+
+
+    if (re.test(theDate)) {
+        var theDateSubDay = theDate.split("/");
+// console.log(thisDay);
+        if (theDateSubDay[2] == thisDay) {
+            dateValue = true;
+            document.getElementById("dtr").innerHTML = "<img src=\"images/check.svg\" alt=\"\">正確";
+        } else {
+            dateValue = false;
+            document.getElementById("dtr").innerHTML = "<img src=\"images/no.svg\" alt=\"\">格式有誤";
+        }
+    } else {
+        dateValue = false;
+        document.getElementById("dtr").innerHTML = "<img src=\"images/no.svg\" alt=\"\">格式應為yyyy/MM/dd";
+    }
+    buttonDisable();
+}

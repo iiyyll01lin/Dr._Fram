@@ -1,0 +1,4 @@
+0:0:0:0:0:0:0:1 - - [14/Feb/2021:00:00:53 +0800] "POST /donkeyCar/login HTTP/1.1" 200 1632
+0:0:0:0:0:0:0:1 - - [14/Feb/2021:00:00:53 +0800] "GET /donkeyCar/images/pic01.jpg HTTP/1.1" 404 785
+0:0:0:0:0:0:0:1 - - [14/Feb/2021:00:03:34 +0800] "POST /donkeyCar/login HTTP/1.1" 200 1737
+0:0:0:0:0:0:0:1 - - [14/Feb/2021:00:03:34 +0800] "GET /donkeyCar/imgs/pic01.jpg HTTP/1.1" 200 227563

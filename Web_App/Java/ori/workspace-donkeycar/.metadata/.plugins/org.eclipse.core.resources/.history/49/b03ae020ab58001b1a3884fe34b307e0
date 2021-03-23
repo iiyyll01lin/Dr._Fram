@@ -1,0 +1,188 @@
+package com.peijie.web;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.peijie.DAO.EmpDAO;
+import com.peijie.bean.EmpBean;
+
+
+@WebServlet("/")
+public class EmpServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	
+	private EmpDAO empDAO;
+	public void init() {
+		empDAO = new EmpDAO();
+	}
+	
+	protected void doGet(HttpServletRequest request, 
+			HttpServletResponse response) throws ServletException, IOException {
+		String action = (String)request.getServletPath();
+		action=action.replaceAll("/View","");
+//		System.out.println(action);
+//		if()
+		try {
+			switch (action) {
+			case "/new":
+				//insert form
+				showNewForm(request, response);
+				break;
+			case "/insert":
+				//insert action
+				insertEmp(request, response);
+				break;
+			case "/delete":
+				deleteEmp(request, response);
+				break;
+			case "/edit":
+				showEditForm(request, response);
+				break;
+			case "/update":
+				updateEmp(request, response);
+				break;
+			case "/nameSearch":
+				searchEmp(request, response);
+				break;
+			default:
+				// handle list
+				listEmp(request, response);
+				break;
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+	private void listEmp(HttpServletRequest request, 
+			HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+		List<EmpBean> listEmp = empDAO.selectAllEmps();
+		boolean showFlag=listEmp!=null&&!listEmp.isEmpty();
+//		System.out.println(showFlag);
+		request.setAttribute("showFlag", showFlag);
+		request.setAttribute("listEmp", listEmp); // 保留Data給下面調派code emp-list.jsp用
+		request.getRequestDispatcher("/View/EmpList.jsp").forward(request, response);
+	}
+	private void showNewForm(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		RequestDispatcher dispatcher = 
+				request.getRequestDispatcher("/View/EmpForm.jsp");
+		dispatcher.forward(request, response);
+	}
+	
+	private void insertEmp(HttpServletRequest request, 
+			HttpServletResponse response) 
+					throws SQLException, IOException, ServletException {
+		boolean updateResult;
+		String uResult="Insert成功";
+		try {
+			int empno =	Integer.parseInt(request.getParameter("empno"));
+			String name = request.getParameter("ename");
+			String hiredate = request.getParameter("hiredate");
+			int salary = Integer.parseInt(request.getParameter("salary"));
+			int deptno = Integer.parseInt(request.getParameter("deptno"));
+			String title = request.getParameter("title");
+			EmpBean newEmp = new EmpBean(empno, name, hiredate, salary, deptno, title);
+			updateResult=empDAO.insert(newEmp);
+		}catch(Exception e) {
+			uResult="Insert失敗";
+		}finally {
+			request.setAttribute("uResult", uResult);
+			request.getRequestDispatcher("/View/EmpResult.jsp").forward(request, response);;
+		}
+//		response.sendRedirect("list");
+	}
+	
+	private void showEditForm(HttpServletRequest request, 
+			HttpServletResponse response)
+			throws SQLException, ServletException, IOException {
+//		System.out.println(request.getParameter("empno"));
+		int empno = Integer.parseInt(request.getParameter("empno"));
+		
+		EmpBean existingEmp = empDAO.selectEmp(empno);
+		RequestDispatcher dispatcher = 
+				request.getRequestDispatcher("/View/EmpForm.jsp");
+		request.setAttribute("emp", existingEmp);
+		dispatcher.forward(request, response);
+	}
+	private void deleteEmp(HttpServletRequest request, 
+			HttpServletResponse response) 
+					throws SQLException, IOException, ServletException {
+		boolean deleteResult;
+		String uResult="Delete成功";
+		try {
+			int empno = Integer.parseInt(request.getParameter("empno"));
+			deleteResult=empDAO.deleteEmp(empno);
+		}catch(Exception e) {
+			uResult="Delete失敗";
+		}finally {
+			request.setAttribute("uResult", uResult);
+			request.getRequestDispatcher("/View/EmpResult.jsp").forward(request, response);;
+		}
+//		response.sendRedirect("list");
+	}
+	private void updateEmp(HttpServletRequest request, 
+			HttpServletResponse response) 
+					throws SQLException, IOException, ServletException {
+		boolean updateResult=false;
+//		String uResult="Update成功";
+		EmpBean emp=null;
+		try {
+			int empno = Integer.parseInt(request.getParameter("empno"));
+			String name = request.getParameter("ename");
+			String hiredate = request.getParameter("hiredate");
+			int salary = Integer.parseInt(request.getParameter("salary"));
+			int deptno = Integer.parseInt(request.getParameter("deptno"));
+			String title = request.getParameter("title");
+			emp = new EmpBean(empno, name, hiredate, 
+				salary, deptno, title);
+			updateResult=empDAO.updateEmp(emp);
+//		System.out.println(updateResult);
+		}catch(Exception e) {
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			String[] line=errors.toString().split("at java.base");
+			line=line[0].split("Exception:");
+			System.out.println("***"+line[1].trim()+"***");
+//			uResult="Update失敗";
+		}finally {
+//			request.setAttribute("uResult", uResult);
+			request.setAttribute("updateResult", updateResult);
+			request.setAttribute("emp", emp);
+			request.getRequestDispatcher("/View/EmpForm.jsp")
+			.forward(request, response);
+		}
+	}
+		
+	private void searchEmp(HttpServletRequest request, 
+			HttpServletResponse response)
+			throws SQLException, ServletException, IOException {	
+		request.setCharacterEncoding("UTF-8");
+		String ename = request.getParameter("ename");
+//		System.out.println(name);
+		try {
+			List<EmpBean> existingEmps = empDAO.searchEmp(ename);
+			boolean searchFlag=existingEmps!=null&&!existingEmps.isEmpty();
+			request.setAttribute("searchFlag", searchFlag);
+			request.setAttribute("existingEmps", existingEmps);
+			request.getRequestDispatcher("/View/EmpList.jsp").forward(request, response);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+}

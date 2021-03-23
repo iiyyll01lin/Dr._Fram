@@ -1,0 +1,6 @@
+127.0.0.1 - - [10/Feb/2021:23:00:19 +0800] "GET / HTTP/1.1" 404 751
+0:0:0:0:0:0:0:1 - - [10/Feb/2021:23:00:20 +0800] "GET /donkeyCar/index.jsp HTTP/1.1" 200 180
+0:0:0:0:0:0:0:1 - - [10/Feb/2021:23:00:21 +0800] "GET /favicon.ico HTTP/1.1" 404 762
+0:0:0:0:0:0:0:1 - - [10/Feb/2021:23:00:23 +0800] "GET /donkeyCar/registration.jsp HTTP/1.1" 200 3067
+0:0:0:0:0:0:0:1 - - [10/Feb/2021:23:00:24 +0800] "GET /donkeyCar/css/all.css HTTP/1.1" 200 73625
+0:0:0:0:0:0:0:1 - - [10/Feb/2021:23:00:24 +0800] "GET /donkeyCar/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 80252

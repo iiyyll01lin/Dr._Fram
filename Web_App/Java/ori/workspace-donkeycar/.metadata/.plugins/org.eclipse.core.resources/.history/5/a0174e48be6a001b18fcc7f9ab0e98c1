@@ -1,0 +1,82 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>註冊帳號</title>
+<link href="https://fonts.googleapis.com/css?family=ZCOOL+XiaoWei"
+	rel="stylesheet">
+
+<link rel="stylesheet"
+	href="https://bootswatch.com/4/darkly/bootstrap.min.css">
+<link href="css/all.css" rel="stylesheet">
+<script>
+	// 選擇完要有動作
+	document.addEventListener("DOMContentLoaded",
+			function() {
+				// 
+				document.querySelector("#account1").addEventListener("blur",
+						checkName);
+				document.querySelector("#accountM").addEventListener("blur",
+						checkMail);
+				document.querySelector("#pwd1").addEventListener("blur",
+						cheackPassword);
+				document.querySelector("#adr1").addEventListener("blur",
+						checkAddress);
+				document.querySelector("#tel1").addEventListener("blur",
+						cleanTel);
+			});
+</script>
+</head>
+<body class="homepage">
+	<div class="container">
+		<div class="row mt-5">
+			<div class="col-md-6 m-auto">
+				<div class="card card-body">
+					<h1 class="text-center mb-3">
+						<i class="fas fa-tractor"></i>註冊帳號
+					</h1>
+					<form action="<%=request.getContextPath()%>/register" method="post">
+						<div class="form-group">
+							<label for="account1">姓名</label> <input type="text"
+								class="form-control" id="account1" placeholder="Username"
+								name="name" required><br> <span id="nm"></span><br>
+						</div>
+						<div class="form-group">
+							<label for="accountM">使用者帳號</label> <input type="text"
+								id="accountM" class="form-control" placeholder="Useremail"
+								name="account" required> <span id="nmr"></span><br>
+						</div>
+						<div class="form-group">
+							<label for="pwd1">密碼</label> <input type="password" id="pwd1"
+								placeholder="Password" class="form-control" name="password"
+								required> <span id="pwr"></span><br>
+						</div>
+						<div class="form-group">
+							<label for="adr1">地址</label> <input type="text" id="adr1"
+								placeholder="Address" class="form-control" name="address"
+								required> <span id="adr"></span><br>
+						</div>
+						<div class="form-group">
+							<label for="tel1">聯絡方式</label> <input type="text" id="tel1"
+								placeholder="Contact" class="form-control" name="contact"
+								required> <span id="adr"></span><br>
+						</div>
+						<button type="submit" class="btn btn-primary btn-block"
+							value="Register">註冊</button>
+						<p class="lead mt-4">
+							已經有帳號了? <a href="index.jsp">登入</a>
+						</p>
+					</form>
+					<script src="js/js_hw2.js"></script>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+		crossorigin="anonymous"></script>
+</body>
+</html>

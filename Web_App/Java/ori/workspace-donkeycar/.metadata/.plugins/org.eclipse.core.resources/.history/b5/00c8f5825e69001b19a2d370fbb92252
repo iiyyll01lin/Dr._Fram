@@ -1,0 +1,53 @@
+package com.peijie.controller;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+
+import com.peijie.DAO.userDAO;
+import com.peijie.bean.User;
+
+
+@WebServlet("/register")
+public class RegisterServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	private userDAO userDao;
+
+    public void init() {
+    	userDao = new userDAO();
+    }   
+
+    public RegisterServlet() {
+        super();
+    }
+
+	protected void doGet(HttpServletRequest request, 
+			HttpServletResponse response) throws ServletException, IOException {
+		
+		String userName = request.getParameter("name");
+        String userAccount = request.getParameter("account");
+        String password = request.getParameter("password");
+        String address = request.getParameter("address");
+        String contact = request.getParameter("contact");
+        
+      //make user object
+        User userModel = new User(userName, userAccount, password, contact, address);
+        try {
+        	userDao.registerUser(userModel);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		
+	}
+
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+
+}

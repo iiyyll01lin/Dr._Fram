@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Upload files</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+	<form method="post" action="../UploadFiles"
+		enctype="multipart/form-data">
+		<button type="button" onclick="location.href='javascript:void(addFile());'" class="btn btn-outline-info file">新增附件</button>
+		
+		<div id="fileDiv"></div>
+		<input type="submit" class="btn btn-outline-info" value="上傳" />
+	</form>
+	<script language="javascript">
+		var i = 0;
+		var maxTime = 10; // 最大次數 
+		var ary=new Array(10);
+		for(j=0;j<maxTime;j++){
+			ary[j]=0;
+		}
+		function addFile() {
+			if (i < maxTime) {
+				i++;
+				ary[i-1]=1;
+				var fileDiv = document.all['fileDiv'];
+				var strHtml = '<span><input type="file" class="form-control-file" name="file'+i
+				+'"><button class="btn btn-outline-danger" onclick="removeFile(parentNode);">刪除</button><br></span>';
+				fileDiv.innerHTML += strHtml;
+			} else {
+				alert("對不起，最多隻能上傳10個附件");
+			}
+		}
+
+		function removeFile(obj) {
+			i--;
+			alert(i);
+			obj.removeNode(true);
+		}
+	</script>
+</body>
+</html>
