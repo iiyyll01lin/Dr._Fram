@@ -1,6 +1,6 @@
 # README
 
-# Dr.Farm
+# Dr._Farm
 Dr.Farm is a project which contains three parts: autonomous driving, object detection and web application.
 
 # Pi_Donkeycar & Pi_Camera
